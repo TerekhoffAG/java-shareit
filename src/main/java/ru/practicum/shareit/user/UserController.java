@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.constant.LogMessage;
 import ru.practicum.shareit.user.dto.UserDto;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -16,14 +17,14 @@ public class UserController {
     private final UserService service;
 
     @PostMapping
-    public UserDto create(@RequestBody UserDto dto) {
+    public UserDto create(@Valid @RequestBody UserDto dto) {
         log.info(LogMessage.POST_REQUEST);
         return service.save(dto);
     }
 
-    @PutMapping("/{userId}")
-    public UserDto update(@RequestBody UserDto dto, @PathVariable Integer userId) {
-        log.info(LogMessage.PUT_REQUEST);
+    @PatchMapping("/{userId}")
+    public UserDto update(@Valid @RequestBody UserDto dto, @PathVariable Integer userId) {
+        log.info(LogMessage.PATCH_REQUEST);
         return service.update(dto, userId);
     }
 

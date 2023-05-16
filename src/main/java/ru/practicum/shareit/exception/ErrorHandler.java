@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ErrorHandler {
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleAlreadyFieldExistsException(final AlreadyFieldExistsException exp) {
         log.warn(exp.getMessage());
         return new ErrorResponse(exp.getMessage());
