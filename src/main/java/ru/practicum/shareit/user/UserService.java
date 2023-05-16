@@ -26,7 +26,7 @@ public class UserService {
 
     public UserDto update(UserDto dto, Integer id) {
         dto.setId(id);
-        User user = repository.update(UserMapper.toUser(dto));
+        User user = repository.update(dto);
         log.info(LogMessage.UPDATE_USER, id);
         return UserMapper.toUserDto(user);
     }

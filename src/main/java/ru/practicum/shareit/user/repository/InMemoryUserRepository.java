@@ -5,6 +5,7 @@ import ru.practicum.shareit.constant.ExpMessage;
 import ru.practicum.shareit.exception.AlreadyFieldExistsException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,11 +29,21 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public User update(User user) {
-        Integer id = user.getId();
-        checkEmail(user.getEmail(), id);
+    public User update(UserDto dto) {
+        Integer id = dto.getId();
+        String name = dto.getName();
+        String email = dto.getEmail();
+
+        checkEmail(email, id);
         checkUser(id);
-        users.put(id, user);
+
+        User oldUser = users.get(id);
+        User newUser = new User(
+                id,
+                name != null ? name : oldUser.getName(),
+                email != null ? email : oldUser.getEmail()
+        );
+        users.put(id, newUser);
 
         return users.get(id);
     }
@@ -64,8 +75,10 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     private void checkEmail(String email, Integer id) {
-        if (!email.equals(findOne(id).getEmail())) {
-            checkEmail(email);
+        if (email != null) {
+            if (!email.equals(findOne(id).getEmail())) {
+                checkEmail(email);
+            }
         }
     }
 
