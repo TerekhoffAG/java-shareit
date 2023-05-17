@@ -7,6 +7,7 @@ import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.dto.UserDto;
 
+import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,11 +67,14 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     private void checkEmail(String email) {
+        if (email == null) {
+            throw new ValidationException(ExpMessage.INVALIDED_EMAIL);
+        }
         List<User> list = findAll().stream()
                 .filter(item -> item.getEmail().equals(email))
                 .collect(Collectors.toList());
         if (!list.isEmpty()) {
-            throw new AlreadyFieldExistsException(String.format(ExpMessage.EMAIL_EXISTS, email));
+            throw new AlreadyFieldExistsException(String.format(ExpMessage.EXISTS_EMAIL, email));
         }
     }
 
