@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import ru.practicum.shareit.constant.ExpMessage;
 import ru.practicum.shareit.exception.AlreadyFieldExistsException;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exception.NullFieldModelException;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.dto.UserDto;
 
@@ -87,6 +88,9 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     private void checkUser(Integer id) {
+        if (id == null) {
+            throw new NullFieldModelException(ExpMessage.INVALIDED_USER_ID);
+        }
         if (!users.containsKey(id)) {
             throw new NotFoundException(String.format(ExpMessage.NOT_FOUND_USER, id));
         }

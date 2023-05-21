@@ -4,6 +4,9 @@ public final class LogMessage {
     public static final String CREATE_USER = "Создан пользователь id= {}";
     public static final String UPDATE_USER = "Обновлён пользователь id= {}";
     public static final String REMOVE_USER = "Удалён пользователь id= {}";
+    public static final String CREATE_ITEM = "Создана вещь id= {}";
+    public static final String UPDATE_ITEM = "Обновлена вещь id= {}";
+    public static final String REMOVE_ITEM = "Удалена вещь id= {}";
 
     public static final String GET_REQUEST = "Получен get запрос.";
     public static final String POST_REQUEST = "Получен post запрос.";

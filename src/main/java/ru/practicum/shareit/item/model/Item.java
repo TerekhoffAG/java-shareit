@@ -1,15 +1,13 @@
 package ru.practicum.shareit.item.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
-/**
- * TODO Sprint add-controllers.
- */
-@Getter
-@Setter
+
+@Data
+@AllArgsConstructor
 public class Item {
     private Integer id;
     private String name;
