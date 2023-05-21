@@ -10,6 +10,7 @@ import ru.practicum.shareit.item.model.Item;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class InMemoryItemRepository implements ItemRepository {
@@ -59,7 +60,7 @@ public class InMemoryItemRepository implements ItemRepository {
     }
 
     private void checkOwner(Item item, Integer ownerId) {
-        if (item.getOwner().getId() != ownerId) {
+        if (!Objects.equals(item.getOwner().getId(), ownerId)) {
             throw new PermissionException(ExpMessage.UPDATE_ANOTHER_USER_ITEM);
         }
     }
