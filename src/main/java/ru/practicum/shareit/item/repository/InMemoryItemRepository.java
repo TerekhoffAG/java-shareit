@@ -29,11 +29,24 @@ public class InMemoryItemRepository implements ItemRepository {
     @Override
     public Item update(ItemDto dto) {
         Integer itemId = dto.getId();
+        String name = dto.getName();
+        String description = dto.getDescription();
+        Boolean available = dto.getAvailable();
         Integer ownerId = dto.getOwner().getId();
         Item oldItem = items.get(itemId);
 
         checkItem(ownerId);
         checkOwner(oldItem, ownerId);
+
+        Item newItem = new Item(
+                itemId,
+                name != null ? name : oldItem.getName(),
+                description != null ? description : oldItem.getDescription(),
+                available != null ? available : oldItem.getAvailable(),
+                oldItem.getOwner(),
+                oldItem.getRequest()
+        );
+        items.put(itemId, newItem);
 
         return items.get(itemId);
     }
