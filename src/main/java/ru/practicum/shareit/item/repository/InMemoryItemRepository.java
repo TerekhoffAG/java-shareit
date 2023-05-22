@@ -25,16 +25,15 @@ public class InMemoryItemRepository implements ItemRepository {
     }
 
     @Override
-    public Item update(ItemDto dto) {
+    public Item update(ItemDto dto, Integer userId) {
         Integer itemId = dto.getId();
         String name = dto.getName();
         String description = dto.getDescription();
         Boolean available = dto.getAvailable();
-        Integer ownerId = dto.getOwner().getId();
-        Item oldItem = items.get(itemId);
 
-        checkItem(ownerId);
-        checkOwner(oldItem, ownerId);
+        checkItem(itemId);
+        Item oldItem = items.get(itemId);
+        checkOwner(oldItem, userId);
 
         Item newItem = new Item(
                 itemId,
@@ -79,7 +78,7 @@ public class InMemoryItemRepository implements ItemRepository {
     }
 
     private void checkOwner(Item item, Integer ownerId) {
-        if (!Objects.equals(item.getOwner().getId(), ownerId)) {
+        if (!item.getOwner().getId().equals(ownerId)) {
             throw new NotFoundException(ExpMessage.UPDATE_ANOTHER_USER_ITEM);
         }
     }

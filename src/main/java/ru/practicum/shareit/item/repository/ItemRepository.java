@@ -8,7 +8,7 @@ import java.util.List;
 public interface ItemRepository {
     Item create(Item item);
 
-    Item update(ItemDto dto);
+    Item update(ItemDto dto, Integer userId);
 
     Item findOne(Integer id);
 

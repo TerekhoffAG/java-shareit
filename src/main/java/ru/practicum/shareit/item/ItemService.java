@@ -30,10 +30,8 @@ public class ItemService {
     }
 
     public ItemDto update(ItemDto dto, Integer itemId, Integer userId) {
-        User owner = userRepository.findOne(userId);
         dto.setId(itemId);
-        dto.setOwner(owner);
-        Item updatedItem = itemRepository.update(dto);
+        Item updatedItem = itemRepository.update(dto, userId);
         log.info(LogMessage.UPDATE_ITEM, itemId);
 
         return ItemMapper.toItemDto(updatedItem);
