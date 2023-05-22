@@ -10,6 +10,9 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -36,13 +39,15 @@ public class ItemService {
         return ItemMapper.toItemDto(updatedItem);
     }
 
-//    private void validateItem(Item item) {
-//        String name = item.getName();
-//        String description = item.getDescription();
-//        Boolean available = item.getAvailable();
-//
-//        if (name.isBlank() || description.isBlank() || available == null) {
-//
-//        }
-//    }
+    public ItemDto findOne(Integer id) {
+        Item item = itemRepository.findOne(id);
+        return ItemMapper.toItemDto(item);
+    }
+
+    public List<ItemDto> findAllByUser(Integer userId) {
+        return itemRepository.findAll().stream()
+                .filter(item -> item.getOwner().getId().equals(userId))
+                .map(ItemMapper::toItemDto)
+                .collect(Collectors.toList());
+    }
 }

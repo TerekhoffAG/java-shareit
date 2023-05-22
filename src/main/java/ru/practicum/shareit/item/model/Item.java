@@ -5,7 +5,6 @@ import lombok.Data;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
-
 @Data
 @AllArgsConstructor
 public class Item {

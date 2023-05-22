@@ -7,10 +7,7 @@ import ru.practicum.shareit.exception.PermissionException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 public class InMemoryItemRepository implements ItemRepository {
@@ -53,12 +50,13 @@ public class InMemoryItemRepository implements ItemRepository {
 
     @Override
     public Item findOne(Integer id) {
-        return null;
+        checkItem(id);
+        return items.get(id);
     }
 
     @Override
     public List<Item> findAll() {
-        return null;
+        return new ArrayList<>(items.values());
     }
 
     @Override

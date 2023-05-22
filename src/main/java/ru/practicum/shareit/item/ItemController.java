@@ -7,6 +7,7 @@ import ru.practicum.shareit.constant.LogMessage;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -27,5 +28,17 @@ public class ItemController {
     public ItemDto update(@RequestBody ItemDto dto, @PathVariable Integer itemId, @RequestHeader(USER_ID) Integer userId) {
         log.info(LogMessage.PATCH_REQUEST);
         return itemService.update(dto, itemId, userId);
+    }
+
+    @GetMapping("/{itemId}")
+    public ItemDto getItemById(@PathVariable Integer itemId) {
+        log.info(LogMessage.GET_REQUEST);
+        return itemService.findOne(itemId);
+    }
+
+    @GetMapping
+    public List<ItemDto> getAll(@RequestHeader(USER_ID) Integer userId) {
+        log.info(LogMessage.GET_REQUEST);
+        return itemService.findAllByUser(userId);
     }
 }
