@@ -42,7 +42,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleThrowable(final RuntimeException exp) {
+    public ErrorResponse handleThrowable(final Throwable exp) {
         log.error(exp.getMessage());
         return new ErrorResponse(ExpMessage.INTERNAL_SERVER_ERROR);
     }

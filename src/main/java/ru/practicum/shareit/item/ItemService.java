@@ -10,6 +10,7 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,7 +52,7 @@ public class ItemService {
 
     public List<ItemDto> findFreeItemByKeyword(String text) {
         if (text.isBlank()) {
-            return List.of();
+            return new ArrayList<>();
         }
 
         return itemRepository.findFreeItemByKeyword(text).stream()
