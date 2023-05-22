@@ -2,12 +2,13 @@ package ru.practicum.shareit.item.repository;
 
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.constant.ExpMessage;
+import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.exception.NullFieldModelException;
-import ru.practicum.shareit.exception.PermissionException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class InMemoryItemRepository implements ItemRepository {
@@ -55,13 +56,20 @@ public class InMemoryItemRepository implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAll() {
-        return new ArrayList<>(items.values());
+    public List<Item> findAllByUser(Integer userId) {
+        checkItem(userId);
+        return items.values().stream()
+                .filter(item -> item.getOwner().getId().equals(userId))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Integer id) {
-
+    public List<Item> findFreeItemByKeyword(String text) {
+        return items.values().stream()
+                .filter(item -> item.getName().toLowerCase().contains(text.toLowerCase()) ||
+                        item.getDescription().toLowerCase().contains(text.toLowerCase()))
+                .filter(item -> item.getAvailable().equals(true))
+                .collect(Collectors.toList());
     }
 
     private void checkItem(Integer id) {
@@ -72,7 +80,7 @@ public class InMemoryItemRepository implements ItemRepository {
 
     private void checkOwner(Item item, Integer ownerId) {
         if (!Objects.equals(item.getOwner().getId(), ownerId)) {
-            throw new PermissionException(ExpMessage.UPDATE_ANOTHER_USER_ITEM);
+            throw new NotFoundException(ExpMessage.UPDATE_ANOTHER_USER_ITEM);
         }
     }
 }

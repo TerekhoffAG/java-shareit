@@ -37,8 +37,14 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAll(@RequestHeader(USER_ID) Integer userId) {
+    public List<ItemDto> getAllByUser(@RequestHeader(USER_ID) Integer userId) {
         log.info(LogMessage.GET_REQUEST);
         return itemService.findAllByUser(userId);
+    }
+
+    @GetMapping("/search")
+    public List<ItemDto> getFreeItemByKeyword(@RequestParam String text) {
+        log.info(LogMessage.GET_REQUEST);
+        return itemService.findFreeItemByKeyword(text);
     }
 }

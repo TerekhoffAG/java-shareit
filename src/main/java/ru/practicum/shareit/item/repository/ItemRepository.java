@@ -12,7 +12,7 @@ public interface ItemRepository {
 
     Item findOne(Integer id);
 
-    List<Item> findAll();
+    List<Item> findAllByUser(Integer id);
 
-    void delete(Integer id);
+    List<Item> findFreeItemByKeyword(String text);
 }

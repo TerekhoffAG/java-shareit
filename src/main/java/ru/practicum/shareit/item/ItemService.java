@@ -45,8 +45,13 @@ public class ItemService {
     }
 
     public List<ItemDto> findAllByUser(Integer userId) {
-        return itemRepository.findAll().stream()
-                .filter(item -> item.getOwner().getId().equals(userId))
+        return itemRepository.findAllByUser(userId).stream()
+                .map(ItemMapper::toItemDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<ItemDto> findFreeItemByKeyword(String text) {
+        return itemRepository.findFreeItemByKeyword(text).stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
     }
