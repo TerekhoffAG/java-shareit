@@ -39,13 +39,13 @@ public class InMemoryUserRepository implements UserRepository {
         checkEmail(email, id);
         checkUser(id);
 
-        User oldUser = users.get(id);
-        User newUser = new User(
-                id,
-                name != null ? name : oldUser.getName(),
-                email != null ? email : oldUser.getEmail()
-        );
-        users.put(id, newUser);
+        User user = users.get(id);
+        if (name != null) {
+            user.setName(name);
+        }
+        if (email != null) {
+            user.setEmail(email);
+        }
 
         return users.get(id);
     }

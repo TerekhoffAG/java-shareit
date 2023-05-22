@@ -32,18 +32,18 @@ public class InMemoryItemRepository implements ItemRepository {
         Boolean available = dto.getAvailable();
 
         checkItem(itemId);
-        Item oldItem = items.get(itemId);
-        checkOwner(oldItem, userId);
+        Item item = items.get(itemId);
+        checkOwner(item, userId);
 
-        Item newItem = new Item(
-                itemId,
-                name != null ? name : oldItem.getName(),
-                description != null ? description : oldItem.getDescription(),
-                available != null ? available : oldItem.getAvailable(),
-                oldItem.getOwner(),
-                oldItem.getRequest()
-        );
-        items.put(itemId, newItem);
+        if (name != null) {
+            item.setName(name);
+        }
+        if (description != null) {
+            item.setDescription(description);
+        }
+        if (available != null) {
+            item.setAvailable(available);
+        }
 
         return items.get(itemId);
     }
@@ -64,9 +64,9 @@ public class InMemoryItemRepository implements ItemRepository {
     @Override
     public List<Item> findFreeItemByKeyword(String text) {
         return items.values().stream()
+                .filter(item -> item.getAvailable().equals(true))
                 .filter(item -> item.getName().toLowerCase().contains(text.toLowerCase()) ||
                         item.getDescription().toLowerCase().contains(text.toLowerCase()))
-                .filter(item -> item.getAvailable().equals(true))
                 .collect(Collectors.toList());
     }
 
