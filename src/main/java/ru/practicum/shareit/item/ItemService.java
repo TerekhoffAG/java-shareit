@@ -50,6 +50,10 @@ public class ItemService {
     }
 
     public List<ItemDto> findFreeItemByKeyword(String text) {
+        if (text.isBlank()) {
+            return List.of();
+        }
+
         return itemRepository.findFreeItemByKeyword(text).stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
