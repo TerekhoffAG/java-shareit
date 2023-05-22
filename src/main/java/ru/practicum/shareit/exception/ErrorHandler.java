@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.shareit.constant.ExpMessage;
 
 import javax.validation.ValidationException;
 
@@ -38,12 +37,5 @@ public class ErrorHandler {
     public ErrorResponse handlerForbiddenException(final PermissionException exp) {
         log.warn(exp.getMessage());
         return new ErrorResponse(exp.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleThrowable(final Throwable exp) {
-        log.error(exp.getMessage());
-        return new ErrorResponse(ExpMessage.INTERNAL_SERVER_ERROR);
     }
 }
