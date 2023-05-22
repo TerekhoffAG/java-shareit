@@ -43,6 +43,7 @@ public class ItemService {
     }
 
     public List<ItemDto> findAllByUser(Integer userId) {
+        userRepository.findOne(userId);
         return itemRepository.findAllByUser(userId).stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());

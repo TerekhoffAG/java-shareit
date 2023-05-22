@@ -56,7 +56,6 @@ public class InMemoryItemRepository implements ItemRepository {
 
     @Override
     public List<Item> findAllByUser(Integer userId) {
-        checkItem(userId);
         return items.values().stream()
                 .filter(item -> item.getOwner().getId().equals(userId))
                 .collect(Collectors.toList());
