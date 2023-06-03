@@ -1,6 +1,6 @@
 package ru.practicum.shareit.item;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.constant.LogMessage;
@@ -11,8 +11,8 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/items")
+@AllArgsConstructor
 public class ItemController {
     private static final String USER_ID = "X-Sharer-User-Id";
 
